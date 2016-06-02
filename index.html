@@ -33,7 +33,6 @@
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
           <li><a href="#" onclick="izpisiGeneriranePodatke()">Generiranje podatkov</a></li>
-          <li id="generirajPodatke"></li>
         </ul>
       </div>
     </div>
@@ -41,26 +40,33 @@
   <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
 
   <!-- ZAČETEK: Vsebina aplikacije -->
-		<div id="header"><h2>Vnos in poizvedovanje po EHR podatkih <small>EhrScape platforma</small></h2></div>
-			
-				<div class="col-lg-6 col-md-6 col-sm-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-lg-8 col-md-8 col-sm-8"><b>Preberi EHR zapis</b> obstoječega bolnika</div>
-							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option></select></div>
-						</div>
-					</div>
-					<div class="panel-body">
-						<span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
-				  	</div>
-				</div>
-			</div>
+  		<div id="header"><h2>Vnos in poizvedovanje po EHR podatkih <small>EhrScape platforma</small></h2></div>
+  			
+  			<div class="p">
+  				<div class="col-lg-6 col-md-6 col-sm-6">
+  				<div class="panel panel-default">
+  					<div class="panel-heading">
+  						<div class="row ">
+  							<div class="col-lg-8 col-md-8 col-sm-8"><b>Preberi EHR zapis</b> obstoječega bolnika</div>
+  							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option></select></div>
+  						</div>
+  					</div>
+  					<div class="panel-body">
+  						<span class="label label-default w3-red">EHR ID</span><input id="preberiEHRid" type="text" class="w3-input w3-border w3-round-large w3-border-red w3-light-grey" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+  						<button type="button" class="w3-btn w3-white w3-border w3-border-red w3-round w3-light-grey " onclick="preberiEHRodBolnika()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
+  				  	</div>
+  				</div>
+  			</div>
+  		</div>
+  		
+  		<div style="float:left" id="uspesno"><p><i>Potrditev o uspehu generiranja:</i></p></div>
+		
 		</div>
 		
-		<div style="float:left" id="uspesno"><p><i>Potritev o uspehu generiranja:</i></p></div>
 		
+		<div class="pp">
+      
+		</div>
   <!-- KONEC: Vsebina aplikacije -->
 
 </body>
