@@ -33,18 +33,18 @@ function getSessionId() {
 function generirajPodatke(stPacienta) {
   // TODO: Potrebno implementirati
  var sessionId = getSessionId();
- var ime, priimek, datumRojstva;
+ var ime, priimek, datumRojstva,telesnaVisina,telesnaTeza,telesnaTemperatura,sistolicniKrvniTlak,diastolicniKrvniTlak,nasicenostKrviSKisikom;
  var ehrId;
 
     switch(stPacienta){
         case 1: 
-            ime = "Jernej";
-            priimek = "Vrhunc";
+            ime = "Klemen";
+            priimek = "Spraveka";
             datumRojstva = "1996-01-30T21:21";
             break;
         case 2:
             ime = "Jure";
-            priimek = "Iznikoder";
+            priimek = "Odnikoder";
             datumRojstva = "1954-03-03T13:54";
             break;
         case 3:
@@ -80,9 +80,9 @@ function generirajPodatke(stPacienta) {
 		            data: JSON.stringify(partyData),
 		            success: function (party) {
 		                if (party.action == 'CREATE') {
-		                    $("#kreirajSporocilo").html("<span class='obvestilo " +
+		                    $("#generirajPodatke").append("<span class='obvestilo " +
                           "label label-success fade-in'>Uspešno kreiran EHR '" +
-                          ehrId + "'.</span>");
+                          ehrId + "' za osebo "+ime+" "+priimek+", rojeno "+datumRojstva+".</span>    ");
 		                    $("#preberiEHRid").val(ehrId);
 		                }
 		            },
@@ -101,8 +101,7 @@ function generirajPodatke(stPacienta) {
 
 function izpisiGeneriranePodatke(){
     for(var i = 1; i <=3 ; i++){
-        var ehrId = generirajPodatke(i);
-        
+        generirajPodatke(i);
     }
 }
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
