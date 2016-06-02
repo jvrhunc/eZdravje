@@ -106,7 +106,55 @@ function izpisiGeneriranePodatke(){
 }
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
+function kreirajEHRzaBolnika() {
+	sessionId = getSessionId();
 
+	var ime = $("#kreirajIme").val();
+	var priimek = $("#kreirajPriimek").val();
+	var datumRojstva = $("#kreirajDatumRojstva").val();
+
+	if (!ime || !priimek || !datumRojstva || ime.trim().length == 0 ||
+      priimek.trim().length == 0 || datumRojstva.trim().length == 0) {
+		$("#kreirajSporocilo").html("<span class='obvestilo label " +
+      "label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
+	} else {
+		$.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		$.ajax({
+		    url: baseUrl + "/ehr",
+		    type: 'POST',
+		    success: function (data) {
+		        var ehrId = data.ehrId;
+		        var partyData = {
+		            firstNames: ime,
+		            lastNames: priimek,
+		            dateOfBirth: datumRojstva,
+		            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+		        };
+		        $.ajax({
+		            url: baseUrl + "/demographics/party",
+		            type: 'POST',
+		            contentType: 'application/json',
+		            data: JSON.stringify(partyData),
+		            success: function (party) {
+		                if (party.action == 'CREATE') {
+		                    $("#kreirajSporocilo").html("<span class='obvestilo " +
+                          "label label-success fade-in'>Uspešno kreiran EHR '" +
+                          ehrId + "'.</span>");
+		                    $("#preberiEHRid").val(ehrId);
+		                }
+		            },
+		            error: function(err) {
+		            	$("#kreirajSporocilo").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+		            }
+		        });
+		    }
+		});
+	}
+}
 
 $(document).ready(function() {
     
@@ -116,10 +164,6 @@ $(document).ready(function() {
         $("#kreirajIme").val(podatki[0]);
         $("#kreirajPriimek").val(podatki[1]);
         $("#kreirajDatumRojstva").val(podatki[2]);
-    });
-    
-    $('#generirajPodatke').onclick(function() {
-        
     });
     
 });
