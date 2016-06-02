@@ -85,7 +85,7 @@ function generirajPodatke(stPacienta) {
         	telesnaTeza = telesneTeze[stPacienta-1];
         	telesnaTemperatura = telesneTemperature[stPacienta-1];
         	sistolicniKrvniTlak = sistolicniKrvniTlaki[stPacienta-1];
-        	diastolicniKrvniTlak = diastolicniKrvniTlaki[stPacienta-1];
+        	diastolicniKrvniTlaki = diastolicniKrvniTlaki[stPacienta-1];
         	nasicenostKrviSKisikom = nasicenostKrviSKisikom1[stPacienta-1];
         	merilec = merilci[stPacienta-1];
             break;
@@ -251,4 +251,9 @@ $(document).ready(function() {
         $("#kreirajDatumRojstva").val(podatki[2]);
     });
     
+    $('#preberiObstojeciEHR').change(function() {
+		$("#preberiSporocilo").html("");
+		$("#preberiEHRid").val($(this).val());
+	});
+
 });
