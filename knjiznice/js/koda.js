@@ -22,6 +22,10 @@ function getSessionId() {
 }
 
 
+var imena = ["Klemen", "Matija", "Jure"];
+var priimki = ["Spraveka","Brezgrada","Odnikoder"];
+var datumiRojstva = ["1996-01-30T21:21","1900-01-01T00:00","1954-03-03T13:54"];
+
 /**
  * Generator podatkov za novega pacienta, ki bo uporabljal aplikacijo. Pri
  * generiranju podatkov je potrebno najprej kreirati novega pacienta z
@@ -33,24 +37,24 @@ function getSessionId() {
 function generirajPodatke(stPacienta) {
   // TODO: Potrebno implementirati
  var sessionId = getSessionId();
- var ime, priimek, datumRojstva,telesnaVisina,telesnaTeza,telesnaTemperatura,sistolicniKrvniTlak,diastolicniKrvniTlak,nasicenostKrviSKisikom;
+ var ime, priimek, datumRojstva;
  var ehrId;
 
     switch(stPacienta){
         case 1: 
-            ime = "Klemen";
-            priimek = "Spraveka";
-            datumRojstva = "1996-01-30T21:21";
+            ime = imena[stPacienta-1];
+            priimek = priimki[stPacienta-1];
+            datumRojstva = datumiRojstva[stPacienta-1];
             break;
         case 2:
-            ime = "Jure";
-            priimek = "Odnikoder";
-            datumRojstva = "1954-03-03T13:54";
+            ime = imena[stPacienta-1];
+            priimek = priimki[stPacienta-1];
+            datumRojstva = datumiRojstva[stPacienta-1];
             break;
         case 3:
-            ime = "Matija";
-            priimek = "Brezgrada";
-            datumRojstva = "1900-01-01T00:00";
+            ime = imena[stPacienta-1];
+            priimek = priimki[stPacienta-1];
+            datumRojstva = datumiRojstva[stPacienta-1];
             break;
     }
     
@@ -80,8 +84,8 @@ function generirajPodatke(stPacienta) {
 		            data: JSON.stringify(partyData),
 		            success: function (party) {
 		                if (party.action == 'CREATE') {
-		                    $("#generirajPodatke").append("<span class='obvestilo " +
-                          "label label-success fade-in'>Uspešno kreiran EHR '" +
+		                    $("#kreirajSporocilo").append("<span class='" +
+                          "label label-success '>Uspešno kreiran EHR '" +
                           ehrId + "' za osebo "+ime+" "+priimek+", rojeno "+datumRojstva+".</span>    ");
 		                    $("#preberiEHRid").val(ehrId);
 		                }

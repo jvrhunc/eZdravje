@@ -47,7 +47,17 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-8 col-md-8 col-sm-8"><b>Kreiraj EHR zapis</b> za novega bolnika</div>
-							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiPredlogoBolnika"></select></div>
+							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiPredlogoBolnika">
+							  <script>
+							    for(var i=0; i <= 3; i++){
+							      if(i == 0){
+							        $("#preberiPredlogoBolnika").append("<option value= ></option>");
+							      } else {
+							        $("#preberiPredlogoBolnika").append("<option value="+imena[i-1]+","+priimki[i-1]+","+datumiRojstva[i-1]+">"+imena[i-1]+" "+priimki[i-1]+"</option>");
+							      }
+							    }
+							  </script>
+							</select></div>
 						</div>
 					</div>
 					<div class="panel-body">
