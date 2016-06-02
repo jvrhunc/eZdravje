@@ -31,12 +31,96 @@ function getSessionId() {
  * @return ehrId generiranega pacienta
  */
 function generirajPodatke(stPacienta) {
-  ehrId = "";
-
   // TODO: Potrebno implementirati
+ var sessionId = getSessionId();
+ var ime, priimek, datumRojstva;
+ var ehrId;
 
-  return ehrId;
+    switch(stPacienta){
+        case 1: 
+            ime = "Jernej";
+            priimek = "Vrhunc";
+            datumRojstva = "1996-01-30T21:21";
+            break;
+        case 2:
+            ime = "Jure";
+            priimek = "Iznikoder";
+            datumRojstva = "1954-03-03T13:54";
+            break;
+        case 3:
+            ime = "Matija";
+            priimek = "Brezgrada";
+            datumRojstva = "1900-01-01T00:00";
+            break;
+    }
+    
+    if (!ime || !priimek || !datumRojstva || ime.trim().length == 0 ||
+      priimek.trim().length == 0 || datumRojstva.trim().length == 0) {
+		$("#kreirajSporocilo").html("<span class='obvestilo label " +
+      "label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
+	} else {
+		$.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		$.ajax({
+		    url: baseUrl + "/ehr",
+		    type: 'POST',
+		    success: function (data) {
+		        var ehrId = data.ehrId;
+		        var partyData = {
+		            firstNames: ime,
+		            lastNames: priimek,
+		            dateOfBirth: datumRojstva,
+		            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+		        };
+		        $.ajax({
+		            url: baseUrl + "/demographics/party",
+		            type: 'POST',
+		            contentType: 'application/json',
+		            data: JSON.stringify(partyData),
+		            success: function (party) {
+		                if (party.action == 'CREATE') {
+		                    $("#kreirajSporocilo").html("<span class='obvestilo " +
+                          "label label-success fade-in'>Uspešno kreiran EHR '" +
+                          ehrId + "'.</span>");
+		                    $("#preberiEHRid").val(ehrId);
+		                }
+		            },
+		            error: function(err) {
+		            	$("#kreirajSporocilo").html("<span class='obvestilo label " +
+                    "label-danger fade-in'>Napaka '" +
+                    JSON.parse(err.responseText).userMessage + "'!");
+		            }
+		        });
+		    }
+		});
+	}
+	
+	return ehrId;
 }
 
-
+function izpisiGeneriranePodatke(){
+    for(var i = 1; i <=3 ; i++){
+        var ehrId = generirajPodatke(i);
+        
+    }
+}
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
+
+
+
+$(document).ready(function() {
+    
+    $('#preberiPredlogoBolnika').change(function() {
+        $("#kreirajSporocilo").html("");
+        var podatki = $(this).val().split(",");
+        $("#kreirajIme").val(podatki[0]);
+        $("#kreirajPriimek").val(podatki[1]);
+        $("#kreirajDatumRojstva").val(podatki[2]);
+    });
+    
+    $('#generirajPodatke').onclick(function() {
+        
+    });
+    
+});
