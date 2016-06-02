@@ -24,7 +24,16 @@ function getSessionId() {
 
 var imena = ["Klemen", "Matija", "Jure"];
 var priimki = ["Spraveka","Brezgrada","Odnikoder"];
-var datumiRojstva = ["1996-01-30T21:21","1900-01-01T00:00","1954-03-03T13:54"];
+var datumiRojstva = ["1996-01-30T21:21","1980-01-01T00:00","1954-03-03T13:54"];
+
+var datumiInUre = ["2016-01-19T14:12Z","2016-04-12T16:39Z","2016-06-02T04:41Z"];
+var telesneVisine = ["190","158","208"];
+var telesneTeze = ["78","109","59"];
+var telesneTemperature = ["36,7","37,9","35,1"];
+var sistolicniKrvniTlaki = ["82","102","54"];
+var diastolicniKrvniTlaki = ["124","169","90"];
+var nasicenostKrviSKisikom1 = ["98","62","73"];
+var merilci = ["Špela Prekohriba","Maša Spentljo","Andreja Komaandreja"];
 
 /**
  * Generator podatkov za novega pacienta, ki bo uporabljal aplikacijo. Pri
@@ -37,7 +46,7 @@ var datumiRojstva = ["1996-01-30T21:21","1900-01-01T00:00","1954-03-03T13:54"];
 function generirajPodatke(stPacienta) {
   // TODO: Potrebno implementirati
  var sessionId = getSessionId();
- var ime, priimek, datumRojstva;
+ var ime, priimek, datumRojstva,datumInUra,telesnaVisina,telesnaTeza,telesnaTemperatura,sistolicniKrvniTlak,diastolicniKrvniTlak,nasicenostKrviSKisikom,merilec;
  var ehrId;
 
     switch(stPacienta){
@@ -45,16 +54,40 @@ function generirajPodatke(stPacienta) {
             ime = imena[stPacienta-1];
             priimek = priimki[stPacienta-1];
             datumRojstva = datumiRojstva[stPacienta-1];
+            datumInUra = datumiInUre[stPacienta-1];
+        	telesnaVisina = telesneVisine[stPacienta-1];
+        	telesnaTeza = telesneTeze[stPacienta-1];
+        	telesnaTemperatura = telesneTemperature[stPacienta-1];
+        	sistolicniKrvniTlak = sistolicniKrvniTlaki[stPacienta-1];
+        	diastolicniKrvniTlak = diastolicniKrvniTlaki[stPacienta-1];
+        	nasicenostKrviSKisikom = nasicenostKrviSKisikom1[stPacienta-1];
+        	merilec = merilci[stPacienta-1];
             break;
         case 2:
             ime = imena[stPacienta-1];
             priimek = priimki[stPacienta-1];
             datumRojstva = datumiRojstva[stPacienta-1];
+            datumInUra = datumiInUre[stPacienta-1];
+        	telesnaVisina = telesneVisine[stPacienta-1];
+        	telesnaTeza = telesneTeze[stPacienta-1];
+        	telesnaTemperatura = telesneTemperature[stPacienta-1];
+        	sistolicniKrvniTlak = sistolicniKrvniTlaki[stPacienta-1];
+        	diastolicniKrvniTlak = diastolicniKrvniTlaki[stPacienta-1];
+        	nasicenostKrviSKisikom = nasicenostKrviSKisikom1[stPacienta-1];
+        	merilec = merilci[stPacienta-1];
             break;
         case 3:
             ime = imena[stPacienta-1];
             priimek = priimki[stPacienta-1];
             datumRojstva = datumiRojstva[stPacienta-1];
+            datumInUra = datumiInUre[stPacienta-1];
+        	telesnaVisina = telesneVisine[stPacienta-1];
+        	telesnaTeza = telesneTeze[stPacienta-1];
+        	telesnaTemperatura = telesneTemperature[stPacienta-1];
+        	sistolicniKrvniTlak = sistolicniKrvniTlaki[stPacienta-1];
+        	diastolicniKrvniTlak = diastolicniKrvniTlaki[stPacienta-1];
+        	nasicenostKrviSKisikom = nasicenostKrviSKisikom1[stPacienta-1];
+        	merilec = merilci[stPacienta-1];
             break;
     }
     
@@ -96,6 +129,53 @@ function generirajPodatke(stPacienta) {
                     JSON.parse(err.responseText).userMessage + "'!");
 		            }
 		        });
+		    }
+		});
+	}
+	
+	
+
+	if (!ehrId || ehrId.trim().length == 0) {
+		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
+      "label label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
+	} else {
+		$.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		var podatki = {
+			// Struktura predloge je na voljo na naslednjem spletnem naslovu:
+      // https://rest.ehrscape.com/rest/v1/template/Vital%20Signs/example
+		    "ctx/language": "en",
+		    "ctx/territory": "SI",
+		    "ctx/time": datumInUra,
+		    "vital_signs/height_length/any_event/body_height_length": telesnaVisina,
+		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
+		   	"vital_signs/body_temperature/any_event/temperature|magnitude": telesnaTemperatura,
+		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
+		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
+		    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak,
+		    "vital_signs/indirect_oximetry:0/spo2|numerator": nasicenostKrviSKisikom
+		};
+		var parametriZahteve = {
+		    ehrId: ehrId,
+		    templateId: 'Vital Signs',
+		    format: 'FLAT',
+		    committer: merilec
+		};
+		$.ajax({
+		    url: baseUrl + "/composition?" + $.param(parametriZahteve),
+		    type: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(podatki),
+		    success: function (res) {
+		        $("#kreirajSporocilo").html(
+              "<span class='obvestilo label label-success fade-in'>" +
+              res.meta.href + ".</span>");
+		    },
+		    error: function(err) {
+		    	$("#kreirajSporocilo").html(
+            "<span class='obvestilo label label-danger fade-in'>Napaka '" +
+            JSON.parse(err.responseText).userMessage + "'!");
 		    }
 		});
 	}
@@ -159,6 +239,7 @@ function kreirajEHRzaBolnika() {
 		});
 	}
 }
+
 
 $(document).ready(function() {
     
