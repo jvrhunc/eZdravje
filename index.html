@@ -14,6 +14,8 @@
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
   <script src="knjiznice/Chart.js/dist/Chart.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADbILi82Qhxd-rJNLMcQdc5a4hU7HaPiw&callback=initMap"
+    async defer></script>
 </head>
 <body>
 
@@ -87,7 +89,11 @@
 		<div class="graf">
 		  <canvas id="myChart" width="400" height="400"></canvas>
 		</div>
-	
+		
+		<div class="row">
+  		<div id="map" class="maps"></div>
+	  </div>
+	  
   <!-- KONEC: Vsebina aplikacije -->
 
 </body>
