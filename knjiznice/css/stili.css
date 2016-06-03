@@ -8,8 +8,9 @@
 }
 
 .pp {
-    padding-top: 210px;
+    padding-top: 100px;
     padding-left: 20px;
     float:left;
     position: absolute;
+    border:thin;
 }
