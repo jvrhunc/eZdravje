@@ -172,42 +172,13 @@ function izpisiGeneriranePodatke(){
     }
 }
 
-function preberiEHRodBolnika() {
-	sessionId = getSessionId();
-
-	var ehrId = $("#preberiEHRid").val();
-
-	if (!ehrId || ehrId.trim().length == 0) {
-		$("#preberiSporocilo").html("<span class='obvestilo label label-warning " +
-      "fade-in'>Prosim vnesite zahtevan podatek!");
-	} else {
-		$.ajax({
-			url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
-			type: 'GET',
-			headers: {"Ehr-Session": sessionId},
-	    	success: function (data) {
-				var party = data.party;
-				$("#preberiSporocilo").html("<span class='obvestilo label " +
-          "label-success fade-in'>Bolnik '" + party.firstNames + " " +
-          party.lastNames + "', ki se je rodil '" + party.dateOfBirth +
-          "'.</span>");
-			},
-			error: function(err) {
-				$("#preberiSporocilo").html("<span class='obvestilo label " +
-          "label-danger fade-in'>Napaka '" +
-          JSON.parse(err.responseText).userMessage + "'!");
-			}
-		});
-	}
-}
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
-function vrniVisine(ehrId){
-    sessionId = getSessionId();
-
-	var visine=[];
-	    
-    if (!ehrId || ehrId.trim().length == 0) {
+function izracunajBMI(){
+	sessionId = getSessionId();
+	var ehrId = $("#preberiObstojeciEHR").val();
+	
+	if (!ehrId || ehrId.trim().length == 0) {
 		$("#preberiSporocilo").html("<span class='obvestilo label label-warning " +
       "fade-in'>Prosim vnesite zahtevan podatek!");
 	} else {
@@ -224,36 +195,76 @@ function vrniVisine(ehrId){
 	              headers:{"Ehr-Session":sessionId},
 	              success:function(res){
 	                  if(res.length > 0){
-	                      for(var i in res){
-	                          var result = res[i].height / 100; 
-	                          visine[i] = result;
-	                          //console.log(result);
-	                      }
-	                		
-	                	return visine;
+	                      visine = res[i].height 
 	                  	
 	                  }
 	              },
 	              error:function(){
 	                  console.log("NAPAKA!");
+	                  return null;
 	              }
 	           });
+	       
+			   $.ajax({
+					url:baseUrl+"/view/"+ehrId+"/weight",
+					type:'GET',
+					headers:{"Ehr-Session":sessionId},
+					success:function(res){
+						if(res.length > 0){
+							
+							
+						}
+					}
+			   })	       	
+	       	
 	       }
 	    });
 	}
+	
 }
 
-
-function vrniTeze(ehrId){
+function vrniVisino(ehrId,callback){
 	sessionId = getSessionId();
-
-	var teze = [];
 	
 	if (!ehrId || ehrId.trim().length == 0) {
 		$("#preberiSporocilo").html("<span class='obvestilo label label-warning " +
       "fade-in'>Prosim vnesite zahtevan podatek!");
 	} else {
-		$.ajax({
+	    $.ajax({
+	       url:baseUrl + "/demographics/ehr/" + ehrId + "/party",
+	       type: 'GET',
+	       headers: {"Ehr-Session":sessionId},
+	       success: function (data){
+	           var party = data.party;
+	           //console.log("IME: "+party.firstNames+" priimek: "+ party.lastNames+" dat. rojstva: "+party.dateOfBirth);
+	           $.ajax({
+	              url:baseUrl+"/view/"+ehrId+"/height",
+	              type:'GET',
+	              headers:{"Ehr-Session":sessionId},
+	              success:function(res){
+	                  if(res.length > 0){
+	                      callback(res);
+	                  }
+	              },
+	              error:function(){
+	                  console.log("NAPAKA!");
+	                  return null;
+	              }
+	           });
+	       }
+	    });
+	}
+	
+}
+
+function vrniTezo(ehrId,callback){
+	sessionId = getSessionId();
+	
+	if (!ehrId || ehrId.trim().length == 0) {
+		$("#preberiSporocilo").html("<span class='obvestilo label label-warning " +
+      "fade-in'>Prosim vnesite zahtevan podatek!");
+	} else {
+	    $.ajax({
 	       url:baseUrl + "/demographics/ehr/" + ehrId + "/party",
 	       type: 'GET',
 	       headers: {"Ehr-Session":sessionId},
@@ -266,30 +277,91 @@ function vrniTeze(ehrId){
 	              headers:{"Ehr-Session":sessionId},
 	              success:function(res){
 	                  if(res.length > 0){
-	                      for(var i in res){
-	                          var result = res[i].weight/10; 
-	                          teze[i] = result;
-	                          //console.log(result);
-	                      }
-	                	//console.log("teze1: "+teze);	
-	                	return teze;
-	                  	
+	                      callback(res);
 	                  }
 	              },
 	              error:function(){
 	                  console.log("NAPAKA!");
+	                  return null;
 	              }
 	           });
 	       }
 	    });
 	}
+	
 }
 
-function izracunajBMI(){
-	var ehrId = $("#preberiEHRid").val();
-	
-	var teze = vrniTeze(ehrId);
-	//console.log("teze2: "+teze);
+function izvediMeritve(){
+		sessionId = getSessionId();
+		var ehrId = $("#preberiObstojeciEHR").val();
+		
+		var visine=["","","","","",""];
+		var teze=["","","","","",""];
+		
+		vrniVisino(ehrId,function(res){
+			for(var i in res){
+				visine[i] = res[i].height;
+				
+			}
+			
+			vrniTezo(ehrId,function(res1){
+				for(var j in res1){
+					teze[j] = res1[j].weight;
+							
+				}	
+				
+				var result = ["","","","","",""];
+				var vmesneVisine = 0;
+				var vmesneTeze = 0;
+				for(var k = 0; k < 6; k++){
+					vmesneTeze = teze[k] / 10;
+					vmesneVisine = visine[k] / 100;
+					result[k]= vmesneTeze / (vmesneVisine*vmesneVisine);
+					//console.log(result[k]);
+				}
+				generirajGraf(result);
+			});
+		});
+}
+
+function generirajGraf(result){
+		var ctx = $("#myChart");
+		var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+              datasets: [{
+                  label: 'BMI',
+                  data: [result[0], result[1], result[2], result[3], result[4], result[5]],
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255,99,132,1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:true
+                      }
+                  }]
+              }
+          }
+      });
 }
 
 $(document).ready(function() {

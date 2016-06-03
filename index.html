@@ -13,6 +13,7 @@
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <script src="node_modules/chart.js/dist/Chart.js"></script>
 </head>
 <body>
 
@@ -53,7 +54,7 @@
   					</div>
   					<div class="panel-body">
   						<span class="label label-default w3-red">EHR ID</span><input id="preberiEHRid" type="text" class="w3-input w3-border w3-round-large w3-border-red w3-light-grey" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-  						<button type="button" class="w3-btn w3-white w3-border w3-border-red w3-round w3-light-grey " onclick="izracunajBMI()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
+  						<button type="button" class="w3-btn w3-white w3-border w3-border-red w3-round w3-light-grey " onclick="izvediMeritve()">Izračunaj BMI in sestavi graf za bolnika</button><span id="preberiSporocilo"></span>
   				  	</div>
   				</div>
   			</div>
@@ -61,14 +62,11 @@
   		
   		<div style="float:left" id="uspesno"><p><i>Potrditev o uspehu generiranja:</i></p></div>
 		
+		<div class="graf">
+		  <canvas id="myChart" width="400" height="400"></canvas>
+		  
+		  
 		</div>
-		
-		
-		<div class="pp">
-      
-		</div>
-		
-		<div id="rezultat"></div>
   <!-- KONEC: Vsebina aplikacije -->
 
 </body>

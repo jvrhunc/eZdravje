@@ -14,3 +14,12 @@
     position: absolute;
     border:thin;
 }
+
+.graf{
+    width:600px;
+    height: 300px;
+    position: absolute;
+    float:right;
+    margin-top: 40px;
+    margin-left: 650px;
+}
