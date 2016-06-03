@@ -200,6 +200,64 @@ function preberiEHRodBolnika() {
 		});
 	}
 }
+
+function dodajMeritveVitalnihZnakov() {
+	sessionId = getSessionId();
+
+	var ehrId = $("#dodajVitalnoEHR").val();
+	var datumInUra = $("#dodajVitalnoDatumInUra").val();
+	var telesnaVisina = $("#dodajVitalnoTelesnaVisina").val();
+	var telesnaTeza = $("#dodajVitalnoTelesnaTeza").val();
+	var telesnaTemperatura = $("#dodajVitalnoTelesnaTemperatura").val();
+	var sistolicniKrvniTlak = $("#dodajVitalnoKrvniTlakSistolicni").val();
+	var diastolicniKrvniTlak = $("#dodajVitalnoKrvniTlakDiastolicni").val();
+	var nasicenostKrviSKisikom = $("#dodajVitalnoNasicenostKrviSKisikom").val();
+	var merilec = $("#dodajVitalnoMerilec").val();
+
+	if (!ehrId || ehrId.trim().length == 0) {
+		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
+      "label label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
+	} else {
+		$.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		var podatki = {
+			// Struktura predloge je na voljo na naslednjem spletnem naslovu:
+      // https://rest.ehrscape.com/rest/v1/template/Vital%20Signs/example
+		    "ctx/language": "en",
+		    "ctx/territory": "SI",
+		    "ctx/time": datumInUra,
+		    "vital_signs/height_length/any_event/body_height_length": telesnaVisina,
+		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
+		   	"vital_signs/body_temperature/any_event/temperature|magnitude": telesnaTemperatura,
+		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
+		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
+		    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak,
+		    "vital_signs/indirect_oximetry:0/spo2|numerator": nasicenostKrviSKisikom
+		};
+		var parametriZahteve = {
+		    ehrId: ehrId,
+		    templateId: 'Vital Signs',
+		    format: 'FLAT',
+		    committer: merilec
+		};
+		$.ajax({
+		    url: baseUrl + "/composition?" + $.param(parametriZahteve),
+		    type: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(podatki),
+		    success: function (res) {
+		        $("#dodajMeritveVitalnihZnakovSporocilo").html(
+              "<span class='obvestilo label label-success fade-in'>Uspešno dodani vitalni znaki.</span>");
+		    },
+		    error: function(err) {
+		    	$("#dodajMeritveVitalnihZnakovSporocilo").html(
+            "<span class='obvestilo label label-danger fade-in'>Napaka '" +
+            JSON.parse(err.responseText).userMessage + "'!");
+		    }
+		});
+	}
+}
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
 function vrniVisine(ehrId){
@@ -297,6 +355,20 @@ $(document).ready(function() {
     $('#preberiObstojeciEHR').change(function() {
 		$("#preberiSporocilo").html("");
 		$("#preberiEHRid").val($(this).val());
+	});
+	
+	$('#preberiObstojeciVitalniZnak').change(function() {
+		$("#dodajMeritveVitalnihZnakovSporocilo").html("");
+		var podatki = $(this).val().split("|");
+		$("#dodajVitalnoEHR").val(podatki[0]);
+		$("#dodajVitalnoDatumInUra").val(podatki[1]);
+		$("#dodajVitalnoTelesnaVisina").val(podatki[2]);
+		$("#dodajVitalnoTelesnaTeza").val(podatki[3]);
+		$("#dodajVitalnoTelesnaTemperatura").val(podatki[4]);
+		$("#dodajVitalnoKrvniTlakSistolicni").val(podatki[5]);
+		$("#dodajVitalnoKrvniTlakDiastolicni").val(podatki[6]);
+		$("#dodajVitalnoNasicenostKrviSKisikom").val(podatki[7]);
+		$("#dodajVitalnoMerilec").val(podatki[8]);
 	});
 
 });
