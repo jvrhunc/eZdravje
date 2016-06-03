@@ -392,7 +392,7 @@ function dodajMeritveVitalnihZnakov() {
 		    data: JSON.stringify(podatki),
 		    success: function (res) {
 		        $("#dodajMeritveVitalnihZnakovSporocilo").html(
-              "<span class='obvestilo label label-success fade-in'>Uspešno dodane meritve za "+ehrId+".</span>");
+              "<span class='obvestilo label label-success fade-in'>Uspešno dodane meritve za "+ehrId+" . Ponovno generiraj graf --></span>");
 		    },
 		    error: function(err) {
 		    	$("#dodajMeritveVitalnihZnakovSporocilo").html(
