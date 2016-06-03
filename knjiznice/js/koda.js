@@ -322,6 +322,9 @@ function izvediMeritve(){
 				generirajGraf(result);
 			});
 		});
+
+	
+	
 }
 
 function generirajGraf(result){
