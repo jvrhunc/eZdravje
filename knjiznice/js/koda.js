@@ -223,6 +223,9 @@ function izracunajBMI(){
 	
 }
 
+
+// TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
+
 function vrniVisino(ehrId,callback){
 	sessionId = getSessionId();
 	
@@ -372,6 +375,20 @@ $(document).ready(function() {
     $('#preberiObstojeciEHR').change(function() {
 		$("#preberiSporocilo").html("");
 		$("#preberiEHRid").val($(this).val());
+	});
+	
+	$('#preberiObstojeciVitalniZnak').change(function() {
+		$("#dodajMeritveVitalnihZnakovSporocilo").html("");
+		var podatki = $(this).val().split("|");
+		$("#dodajVitalnoEHR").val(podatki[0]);
+		$("#dodajVitalnoDatumInUra").val(podatki[1]);
+		$("#dodajVitalnoTelesnaVisina").val(podatki[2]);
+		$("#dodajVitalnoTelesnaTeza").val(podatki[3]);
+		$("#dodajVitalnoTelesnaTemperatura").val(podatki[4]);
+		$("#dodajVitalnoKrvniTlakSistolicni").val(podatki[5]);
+		$("#dodajVitalnoKrvniTlakDiastolicni").val(podatki[6]);
+		$("#dodajVitalnoNasicenostKrviSKisikom").val(podatki[7]);
+		$("#dodajVitalnoMerilec").val(podatki[8]);
 	});
 
 });
