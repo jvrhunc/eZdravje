@@ -110,7 +110,7 @@ function zapisiVitalneZnake(ehrId,stPacienta){
         podatkiZaPacienta(ehrId,"2003-01-10T08:10Z","20,5","65,3","36,2");
         podatkiZaPacienta(ehrId,"2005-08-15T08:11Z","20,8","72,1","35,7");
         podatkiZaPacienta(ehrId,"2010-11-12T08:22Z","21,9","71,0","34,5");
-        podatkiZaPacienta(ehrId,"2015-09-07T08:34Z","22,5","62,1","38,9");
+        podatkiZaPacienta(ehrId,"2015-09-07T08:34Z","22,5","63,1","38,9");
     } else {
         podatkiZaPacienta(ehrId,"2016-01-30T00:00Z","19,0","78,0","36,9");
         podatkiZaPacienta(ehrId,"2016-02-28T21:21Z","19,0","78,1","36,7");
@@ -252,7 +252,7 @@ function vrniDatumInUro(ehrId,callback){
 	           var party = data.party;
 	           //console.log("IME: "+party.firstNames+" priimek: "+ party.lastNames+" dat. rojstva: "+party.dateOfBirth);
 	           $.ajax({
-	              url:baseUrl+"/view/"+ehrId+"/time",
+	              url:baseUrl+"/view/"+ehrId+"/weight",
 	              type:'GET',
 	              headers:{"Ehr-Session":sessionId},
 	              success:function(res){
@@ -274,8 +274,9 @@ function izvediMeritve(){
 		sessionId = getSessionId();
 		var ehrId = $("#preberiObstojeciEHR").val();
 		
-		var visine=["","","","","",""];
-		var teze=["","","","","",""];
+		var visine=["","","","","","","","","",""];
+		var teze=["","","","","","","","","",""];
+		var datumInUra =["","","","","","","","","",""];
 		
 		vrniVisino(ehrId,function(res){
 			for(var i in res){
@@ -286,19 +287,24 @@ function izvediMeritve(){
 			vrniTezo(ehrId,function(res1){
 				for(var j in res1){
 					teze[j] = res1[j].weight;
-							
-				}	
+					datumInUra[j] = res1[j].time;
+					var tmp=datumInUra[j];
+					
+					datumInUra[j] = datumInUra[j].substring(0,10);
+					//console.log(datumInUra[j]);
+				}
+				console.log(datumInUra);
 				
 				var result = ["","","","","",""];
 				var vmesneVisine = 0;
 				var vmesneTeze = 0;
 				for(var k = 0; k < 10; k++){
-					vmesneTeze = teze[k] / 10;
+					vmesneTeze = teze[k];
 					vmesneVisine = visine[k] / 100;
-					result[k]= vmesneTeze / (vmesneVisine*vmesneVisine);
+					result[k]= (vmesneTeze / (vmesneVisine*vmesneVisine))/10;
 					//console.log(result[k]);
 				}
-				generirajGraf(result);
+				generirajGraf(result,datumInUra);
 			});
 		});
 
@@ -306,15 +312,15 @@ function izvediMeritve(){
 	
 }
 
-function generirajGraf(result){
+function generirajGraf(result,datumInUra){
 		var ctx = $("#myChart");
 		var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Orange","Orange","Orange","Orange"],
+              labels: [datumInUra[0], datumInUra[1], datumInUra[2], datumInUra[3], datumInUra[4], datumInUra[5], datumInUra[6],datumInUra[7],datumInUra[8],datumInUra[9]],
               datasets: [{
                   label: 'BMI(Body Mass Index)',
-                  data: [result[0], result[1], result[2], result[3], result[4], result[5], 0,0,0,0],
+                  data: [result[0], result[1], result[2], result[3], result[4], result[5], result[6],result[7],result[8],result[9]],
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
@@ -354,10 +360,6 @@ function dodajMeritveVitalnihZnakov() {
 	var telesnaVisina = $("#dodajVitalnoTelesnaVisina").val();
 	var telesnaTeza = $("#dodajVitalnoTelesnaTeza").val();
 	var telesnaTemperatura = $("#dodajVitalnoTelesnaTemperatura").val();
-	var sistolicniKrvniTlak = $("#dodajVitalnoKrvniTlakSistolicni").val();
-	var diastolicniKrvniTlak = $("#dodajVitalnoKrvniTlakDiastolicni").val();
-	var nasicenostKrviSKisikom = $("#dodajVitalnoNasicenostKrviSKisikom").val();
-	var merilec = $("#dodajVitalnoMerilec").val();
 
 	if (!ehrId || ehrId.trim().length == 0) {
 		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
@@ -376,9 +378,7 @@ function dodajMeritveVitalnihZnakov() {
 		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
 		   	"vital_signs/body_temperature/any_event/temperature|magnitude": telesnaTemperatura,
 		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
-		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
-		    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak,
-		    "vital_signs/indirect_oximetry:0/spo2|numerator": nasicenostKrviSKisikom
+		    
 		};
 		var parametriZahteve = {
 		    ehrId: ehrId,
@@ -392,8 +392,7 @@ function dodajMeritveVitalnihZnakov() {
 		    data: JSON.stringify(podatki),
 		    success: function (res) {
 		        $("#dodajMeritveVitalnihZnakovSporocilo").html(
-              "<span class='obvestilo label label-success fade-in'>" +
-              res.meta.href + ".</span>");
+              "<span class='obvestilo label label-success fade-in'>Uspešno dodane meritve za "+ehrId+".</span>");
 		    },
 		    error: function(err) {
 		    	$("#dodajMeritveVitalnihZnakovSporocilo").html(
