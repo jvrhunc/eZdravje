@@ -60,12 +60,31 @@
   			</div>
   		</div>
   		
-  		<div style="float:left" id="uspesno"><p><i>Potrditev o uspehu generiranja:</i></p></div>
+  		<div style="float:left height:100px" id="uspesno"><p><i>Potrditev o uspehu generiranja:</i></p></div>
+		
+		<div class="row">
+  		<div class="col-lg-6 col-md-6 col-sm-6">
+  				<div class="panel panel-default">
+  					<div class="panel-heading">
+  						<div class="row">
+  							<div class="col-lg-8 col-md-8 col-sm-8"><b>Vnos</b> meritve <b>vitalnih znakov</b> bolnika</div>
+  							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiObstojeciVitalniZnak"><option value=""></option></select></div>
+  						</div>
+  					</div>
+  					<div class="panel-body">
+  						<span class="label label-default">EHR ID</span><input id="dodajVitalnoEHR" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+  						<span class="label label-default">Datum in ura</span><input id="dodajVitalnoDatumInUra" type="text" class="form-control input-mini" placeholder="2014-11-21T11:40Z">
+  						<span class="label label-default">Telesna višina</span><div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control input-mini" placeholder="185"><span class="input-group-addon">cm</span></div>
+  						<span class="label label-default">Telesna teža</span><div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control input-mini" placeholder="80.00"><span class="input-group-addon">kg</span></div>
+  						<span class="label label-default">Telesna temperatura</span><div class="input-group"><input id="dodajVitalnoTelesnaTemperatura" type="text" class="form-control input-mini" placeholder="36.50"><span class="input-group-addon">°C</span></div>
+  						<button type="button" class="btn btn-primary btn-xs" onclick="dodajMeritveVitalnihZnakov()">Dodaj meritve vitalnih znakov</button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
+  				  	</div>
+  				</div>
+  			</div>
+  	</div>		
 		
 		<div class="graf">
 		  <canvas id="myChart" width="400" height="400"></canvas>
-		  
-		  
 		</div>
 	
   <!-- KONEC: Vsebina aplikacije -->

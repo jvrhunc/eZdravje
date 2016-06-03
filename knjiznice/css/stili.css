@@ -19,7 +19,13 @@
     width:600px;
     height: 300px;
     position: absolute;
-    float:right;
-    margin-top: 40px;
-    margin-left: 800px;
+    float:left;
+    margin-top: -250px;
+    margin-left: 10px;
+}
+
+.ppp{
+    padding-top:800px;
+    float:left;
+    position: absolute;
 }
