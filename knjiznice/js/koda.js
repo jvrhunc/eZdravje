@@ -112,11 +112,11 @@ function zapisiVitalneZnake(ehrId,stPacienta){
         podatkiZaPacienta(ehrId,"2010-11-12T08:22Z","21,9","71,0","34,5");
         podatkiZaPacienta(ehrId,"2015-09-07T08:34Z","22,5","63,1","38,9");
     } else {
-        podatkiZaPacienta(ehrId,"2016-01-30T00:00Z","19,0","78,0","36,9");
-        podatkiZaPacienta(ehrId,"2016-02-28T21:21Z","19,0","78,1","36,7");
-        podatkiZaPacienta(ehrId,"2016-03-30T22:11Z","19,0","79,0","36,1");
-        podatkiZaPacienta(ehrId,"2016-04-11T23:59Z","19,0","81,3","36,4");
-        podatkiZaPacienta(ehrId,"2016-05-12T10:58Z","19,1","82,4","37,5");
+        podatkiZaPacienta(ehrId,"2011-01-30T00:00Z","19,0","78,0","36,9");
+        podatkiZaPacienta(ehrId,"2012-02-28T21:21Z","19,0","78,1","36,7");
+        podatkiZaPacienta(ehrId,"2013-03-30T22:11Z","19,0","79,0","36,1");
+        podatkiZaPacienta(ehrId,"2014-04-11T23:59Z","19,0","81,3","36,4");
+        podatkiZaPacienta(ehrId,"2015-05-12T10:58Z","19,1","82,4","37,5");
         podatkiZaPacienta(ehrId,"2016-06-05T07:23Z","19,1","81,0","35,9");
     }
     
@@ -311,23 +311,23 @@ function izvediMeritve(){
 				//console.log("rezultat "+rezultat);
 			
 				if(rezultat < 18){
-					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+"</i></p>\
+					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+" kg/m^2</i></p>\
 											<p class='zapar'>Kaj pa je s vami? Zakaj ste tako suhi? Ali veste, da po svetu vse več in več ljudi umira od podhranjenosti? Bi radi bili eden izmed njih? Resnično upam, da ne!</p>\
 											<p class='zapar'>Priporočam vam, da v tem trenutku obiščeč restavracijo, kjer se naužijete velike porcije ogljikovih hidratov(osebno najbolj priporočam špagete) in beljakovin!</p>\
 											<p class='zapar'>Prav tako vam priporočam da čimprej obiščete zdravnika, saj s podhranjenostjo ni šale! Zato hitro prste na tipkolnico in pojdite v zemljevid poiskat vam najbližjo restavracijo!</p>\
 											<p class='zapar'><b>Tukaj imate nekaj namigov kaj bi lahko iskali</b>: <i>restavracija, špagetarna, bolnica, zdravstveni dom, itd.</i></p>");
 				} else if (rezultat >= 18 && rezultat < 25){
-					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+"</i></p>\
+					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+" kg/m^2</i></p>\
 											<p class='zapar'>Čestitam, vaša BMI vrednost je idealna, le tako naprej!</p>\
 											<p class='zapar'>Mislim da imam ravno pravšnjo idejo za vas..kaj ko bi obiskali kakšne terme, se relaksirali in proslavili vaše zdravo življenje?</p>\
 											 <p class='zapar'><b>Namigi za iskanje</b>: <i>terme, wellnes, kopališče, itd.</i></p>");
 				} else if (rezultat >=25 && rezultat < 30){
-					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+"</i></p>\
+					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+" kg/m^2</i></p>\
 											<p class='zapar'>Kakor vsak dan pravim: <b>s trudom se daleč pride</b>. Le-tega boste vi še kako potrebovali, saj ste na zelo visoki ravni po BMI lestvici. Če se dovolj potrudite, mislim da uspete iz sebe spraviti par kilogramov, kajneda?</p>\
 											<p class='zapar'>Ne jejte več veliko mastne hrane, veliko telovadite in rezultat bo kmalu prišel tudi na vaš trebušček.</p>\
 											<p class='zapar'><b>Tukaj je še nekaj namigov za iskanje po vašem zemljevidu</b>: <i>trim road, fitnes center, šprtna dvorana, itd.</i></p>");
 				} else {
-					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+"</i></p>\
+					$("#sporociloBMI").html("<p class='zapar'><b>Vaš BMI</b>: <i>"+result[0]+" kg/m^2</i></p>\
 											<p class='zapar'>Kaj pa ste vi počeli skozi celotno življenje? Jedli pice? Pili koka-kolo? Namreč vaš BMI je izredno prevelik, kot vrjetno tudi vaš trebušček! Začnite skrbeti za sebe in ne pojejte vsega kar vidite!</p>\
 											<p class='zapar'>Obvezno obiščite zdravnika, če ne celo kar kliničnega centra!</p>\
 											<p class='zapar'><b>Nekaj napotkov za isaknje po zemljevidu</b>: <i>bolnica, bolnišnica, zdravstveni dom, itd.</i></p>");
