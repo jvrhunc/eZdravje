@@ -329,11 +329,16 @@ function izvediMeritve(){
 											<p class='zapar'><b>Nekaj napotkov za isaknje po zemljevidu</b>: <i>bolnica, bolnišnica, zdravstveni dom, itd.</i></p>");
 				}
 				
+				dodajPodatke(teze,visine,result);
+				
 				generirajGraf(result,datumInUra);
 			});
 		});
 }
 
+function dodajPodatke(){
+	
+}
 
 function generirajGraf(result,datumInUra){
 		var ctx = $("#myChart");
