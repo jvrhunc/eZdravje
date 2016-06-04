@@ -66,8 +66,15 @@
 .seennov{
     margin-top:390px;
     margin-left:20px;
+    font-family: Comic Sans Ms
 }
 
 .zapar{
     margin-left: 10px;
+}
+
+.zadnji{
+    margin-left: 800px;
+    margin-top:20px;
+    height: 130px;
 }
