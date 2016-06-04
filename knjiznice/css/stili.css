@@ -31,11 +31,43 @@
 }
 
 .maps{
-    height: 400px;
-    width: 400px;
-    margin-left: 1000px;
-    margin-top:100px;
-    border-radius: 25px;
-    border: 2px solid #ff0000;
+    height: 500px;
+    width: 790px;
+    margin-left: 790px;
+    margin-top:-650px;
+}
 
+.border{
+    border-radius: 25px;
+    border: 2px solid #f06060;
+}
+
+.margin{
+    margin-left: 100px;
+}
+
+.margin2{
+    margin-left: 900px;
+}
+
+.kontejner{
+    margin-top:10px;
+    height:300px;
+    width:100%;
+}
+
+.krneki{
+    margin-top:0px;
+    margin-left:20px;
+    width:47%;
+    height:230px;
+}
+
+.seennov{
+    margin-top:390px;
+    margin-left:20px;
+}
+
+.zapar{
+    margin-left: 10px;
 }
