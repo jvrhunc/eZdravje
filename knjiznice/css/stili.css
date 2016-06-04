@@ -33,6 +33,7 @@
 .maps{
     height: 500px;
     width: 100%;
+    margin-top:10px;
 }
 
 .border{
@@ -75,4 +76,9 @@
     margin-left: 800px;
     margin-top:20px;
     height: 130px;
+}
+
+.margin3{
+    margin-left: 10px;
+    font-size: 30px;
 }
