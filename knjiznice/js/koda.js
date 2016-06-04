@@ -314,19 +314,19 @@ function izvediMeritve(){
 					$("#sporociloBMI").html("<p class='zapar'>Kaj pa je s vami? Zakaj ste tako suhi? Ali veste, da po svetu vse več in več ljudi umira od podhranjenosti? Bi radi bili eden izmed njih? Resnično upam, da ne!</p>\
 											<p class='zapar'>Priporočam vam, da v tem trenutku obiščeč restavracijo, kjer se naužijete velike porcije ogljikovih hidratov(osebno najbolj priporočam špagete) in beljakovin!</p>\
 											<p class='zapar'>Prav tako vam priporočam da čimprej obiščete zdravnika, saj s podhranjenostjo ni šale! Zato hitro prste na tipkolnico in pojdite v zemljevid poiskat vam najbližjo restavracijo!</p>\
-											<p class='zapar'>Tukaj imate nekaj namigov kaj bi lahko iskali: restavracija, špagetarna, bolnica, zdravstveni dom, itd.</p>");
+											<p class='zapar'><b>Tukaj imate nekaj namigov kaj bi lahko iskali</b>: <i>restavracija, špagetarna, bolnica, zdravstveni dom, itd.</i></p>");
 				} else if (rezultat >= 18 && rezultat < 25){
-					$("#sporociloBMI").html("<p>Čestitam, vaša BMI vrednost je idealna, le tako naprej!</p>\
-											<p>Mislim da imam ravno pravšnjo idejo za vas..kaj ko bi obiskali kakšne terme, se relaksirali in proslavili vaše zdravo življenje?</p>\
-											 <p>Namigi za iskanje: terme, wellnes, kopališče, itd.</p>");
+					$("#sporociloBMI").html("<p class='zapar'>Čestitam, vaša BMI vrednost je idealna, le tako naprej!</p>\
+											<p class='zapar'>Mislim da imam ravno pravšnjo idejo za vas..kaj ko bi obiskali kakšne terme, se relaksirali in proslavili vaše zdravo življenje?</p>\
+											 <p class='zapar'><b>Namigi za iskanje</b>: <i>terme, wellnes, kopališče, itd.</i></p>");
 				} else if (rezultat >=25 && rezultat < 30){
-					$("#sporociloBMI").html("<p>Kakor vsak dan pravim: <b>s trudom se daleč pride</b>. Le-tega boste vi še kako potrebovali, saj ste na zelo visoki ravni po BMI lestvici. Če se dovolj potrudite, mislim da uspete iz sebe spraviti par kilogramov, kajneda?</p>\
-											<p>Ne jejte več veliko mastne hrane, veliko telovadite in rezultat bo kmalu prišel tudi na vaš trebušček.</p>\
-											<p>Tukaj je še nekaj namigov za iskanje po vašem zemljevidu: trim road, fitnes center, šprtna dvorana, itd.</p>");
+					$("#sporociloBMI").html("<p class='zapar'>Kakor vsak dan pravim: <b>s trudom se daleč pride</b>. Le-tega boste vi še kako potrebovali, saj ste na zelo visoki ravni po BMI lestvici. Če se dovolj potrudite, mislim da uspete iz sebe spraviti par kilogramov, kajneda?</p>\
+											<p class='zapar'>Ne jejte več veliko mastne hrane, veliko telovadite in rezultat bo kmalu prišel tudi na vaš trebušček.</p>\
+											<p class='zapar'><b>Tukaj je še nekaj namigov za iskanje po vašem zemljevidu</b>: <i>trim road, fitnes center, šprtna dvorana, itd.</i></p>");
 				} else {
-					$("#sporociloBMI").html("<p>Kaj pa ste vi počeli skozi celotno življenje? Jedli pice? Pili koka-kolo? Namreč vaš BMI je izredno prevelik, kot vrjetno tudi vaš trebušček! Začnite skrbeti za sebe in ne pojejte vsega kar vidite!</p>\
-											<p>Obvezno obiščite zdravnika, če ne celo kar kliničnega centra!</p>\
-											<p>Nekaj napotkov za isaknje po zemljevidu: bolnica, bolnišnica, zdravstveni dom</p>");
+					$("#sporociloBMI").html("<p class='zapar'>Kaj pa ste vi počeli skozi celotno življenje? Jedli pice? Pili koka-kolo? Namreč vaš BMI je izredno prevelik, kot vrjetno tudi vaš trebušček! Začnite skrbeti za sebe in ne pojejte vsega kar vidite!</p>\
+											<p class='zapar'>Obvezno obiščite zdravnika, če ne celo kar kliničnega centra!</p>\
+											<p class='zapar'><b>Nekaj napotkov za isaknje po zemljevidu</b>: <i>bolnica, bolnišnica, zdravstveni dom, itd.</i></p>");
 				}
 				
 				generirajGraf(result,datumInUra);
